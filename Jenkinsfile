@@ -24,7 +24,7 @@ pipeline {
         stage('Create docker environments') {
             agent {
                 docker {
-                    image: 'python:3.11-slim'
+                    image 'python:3.11-slim'
                     reuseNode true
                 }
             }
@@ -38,7 +38,7 @@ pipeline {
         stage('Unit tests') {
             agent {
                 docker {
-                    image: 'python-3.11-slim'
+                    image 'python-3.11-slim'
                     reuseNode true
                 }
             }
