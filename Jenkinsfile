@@ -7,7 +7,10 @@
 
 
 pipeline {
+
     agent { label 'linux' }
+    
+    agent { label}
     environment {
         HOME = "${env.WORKSPACE}"
     }
@@ -16,6 +19,36 @@ pipeline {
         stage('Setup') {
             steps {
                 sh 'printenv'
+            }
+        }
+        stage('Create docker environments') {
+            agent {
+                docker {
+                    image: 'python:3.11-slim'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh"""
+                pip install -r requirements.txt
+                pip install -r requirements-text.txt
+                """
+            }
+        }
+        stage('Unit tests') {
+            agent {
+                docker {
+                    image: 'python-3.11-slim'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh 'python3 -m pytest --junitxml results.xml tests/'
+            }
+            post {
+                always {
+                archiveArtifacts artifacts: 'results.xml', fingerprint: true
+                }
             }
         }
     }
