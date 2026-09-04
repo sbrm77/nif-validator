@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh"""
                 pip install -r requirements.txt
-                pip install -r requirements-text.txt
+                pip install -r requirements-test.txt
                 """
             }
         }
