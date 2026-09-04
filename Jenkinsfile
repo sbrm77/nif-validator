@@ -77,9 +77,9 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                withCredentials([usernamePassword: 'dockerHub',
+                withCredentials([usernamePassword(credentialsId: 'dockerHub',
                 usernameVariable: 'username',
-                PasswordVariable: 'password'])
+                PasswordVariable: 'password')])
                 sh"""
                 docker login -u ${username} -p ${password}
                 docker build -t ${username}/nif-validator .
