@@ -79,12 +79,13 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerHub',
                 usernameVariable: 'username',
-                passwordVariable: 'password')])
-                sh"""
-                docker login -u ${username} -p ${password}
-                docker build -t ${username}/nif-validator .
-                docker push ${username}/nif-validator
-                """
+                passwordVariable: 'password')]) {
+                    sh"""
+                    docker login -u ${username} -p ${password}
+                    docker build -t ${username}/nif-validator .
+                    docker push ${username}/nif-validator
+                    """
+                }
             }
         }
     }
