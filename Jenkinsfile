@@ -75,5 +75,17 @@ pipeline {
                 }
             }
         }
+        stage('Deliver') {
+            steps {
+                withCredentials([usernamePassword: 'dockerHub',
+                usernameVariable: 'username',
+                PasswordVariable: 'password'])
+                sh"""
+                docker login -u ${username} -p ${password}
+                docker build -t ${username}/nif-validator .
+                docker push ${username}/nif-validator
+                """
+            }
+        }
     }
 }
