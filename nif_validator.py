@@ -21,3 +21,4 @@ def valida_nif(numero):
 if __name__ == '__main__': # pragma: no cover
     #doctest.testmod()
     print(valida_nif('219998697'))
+
